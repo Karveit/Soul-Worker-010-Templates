@@ -1,0 +1,35 @@
+#include "_types.bt"
+
+
+typedef struct {
+    ushort id;
+    byte day_type;
+    ushort start_time;
+    ushort end_time;
+    uint booster_limit_time;
+    byte appear_group;
+    ushort clear_counts[6];
+    uint clear_boosters[6];
+} ENTRY <read=ReadENTRY>;
+
+string ReadENTRY(ENTRY& val) {
+    string s;
+    SPrintf(s, "%i, %i, %i, %i, %i, %i, { %i, %i, %i, %i, %i, %i }, { %i, %i, %i, %i, %i, %i }",
+        val.id, val.day_type, val.start_time, val.end_time,
+        val.booster_limit_time, val.appear_group, val.clear_counts[0],
+        val.clear_counts[1], val.clear_counts[2], val.clear_counts[3], 
+        val.clear_counts[4], val.clear_counts[5], val.clear_boosters[0],
+        val.clear_boosters[1], val.clear_boosters[2], val.clear_boosters[3],
+        val.clear_boosters[4], val.clear_boosters[5]
+    );
+
+    return s;
+}
+
+
+struct {
+    uint count;
+    ENTRY entry[count] <optimize=false>;
+} entries;
+
+LPSTRING checksum;

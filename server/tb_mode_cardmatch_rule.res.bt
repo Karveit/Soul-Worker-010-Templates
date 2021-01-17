@@ -1,0 +1,23 @@
+#include "_types.bt"
+
+
+typedef struct {
+    uint id;
+    uint win_reward;
+    uint lose_reward;
+} ENTRY <read=ReadENTRY>;
+
+string ReadENTRY(ENTRY& val) {
+    string s;
+    SPrintf(s, "%i, %i, %i", val.id, val.win_reward, val.lose_reward);
+
+    return s;
+}
+
+
+struct {
+    uint count;
+    ENTRY entry[count] <optimize=false>;
+} entries;
+
+LPSTRING checksum;
