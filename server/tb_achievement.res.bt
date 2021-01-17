@@ -1,2 +1,33 @@
-uint count;
-uint
+#include "_types.bt"
+
+
+typedef struct {
+    uint id;
+    byte category;
+    ushort group;
+    byte order;
+    ushort complete_bit;
+    ushort type;
+    uint target_id <comment="taget_id [sic]">;
+    LPWSTRING name;
+    uint count;
+    uint reward_gold;
+    uint reward_ether;
+    uint reward_bp;
+    uint reward_title_1;
+    uint reward_title_2;
+    ubyte reward_item_type_1;
+    ubyte reward_item_type_2;
+    uint reward_item_1;
+    uint reward_item_2;
+    ubyte reward_item_count_1;
+    ubyte reward_item_count_2;
+} ENTRY;
+
+
+struct {
+    uint count;
+    ENTRY entry[count] <optimize=false>;
+} entries;
+
+LPSTRING checksum;

@@ -1,0 +1,14 @@
+#include "_types.bt"
+
+
+typedef struct {
+    uint u0;    // What is this value? It doesn't look like RGBA...
+} ENTRY;
+
+
+struct {
+    uint count;
+    ENTRY entry[count] <optimize=false>;
+} entries;
+
+LPSTRING checksum;
