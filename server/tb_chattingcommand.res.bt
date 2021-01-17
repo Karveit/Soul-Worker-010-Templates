@@ -1,0 +1,28 @@
+#include "_types.bt"
+
+
+typedef struct {
+    uint id;
+    BOOL gm_only;
+    LPWSTRING commands[5] <optimize=false>;
+    uint id_again;
+} ENTRY <read=ReadENTRY>;
+
+string ReadENTRY(ENTRY& val) {
+    string s;
+    SPrintf(s, "%i, %s, %s, %s, %s, %s, %s, %i",
+        val.id, ReadBOOL(val.gm_only), ReadLPWSTRING(val.commands[0]),
+        ReadLPWSTRING(val.commands[1]), ReadLPWSTRING(val.commands[2]),
+        ReadLPWSTRING(val.commands[3]), ReadLPWSTRING(val.commands[4]), val.id_again
+    );
+
+    return s;
+}
+
+
+struct {
+    uint count;
+    ENTRY entry[count] <optimize=false>;
+} entries;
+
+LPSTRING checksum;

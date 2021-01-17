@@ -19,7 +19,7 @@ typedef struct {
         wchar_t value[len];
 } LPWSTRING <read=ReadLPWSTRING>;
 
-string ReadLPWSTRING(LPWSTRING& val) {
+wstring ReadLPWSTRING(LPWSTRING& val) {
     if (val.len > 0)
         return val.value;
 
@@ -58,4 +58,10 @@ string ReadLPUTF8STRING(LPUTF8STRING& val) {
         return val.value;
     
     return "";
+}
+
+typedef ubyte BOOL <read=ReadBOOL>;
+
+string ReadBOOL(BOOL& val) {
+    return (val ? "true" : "false");
 }
