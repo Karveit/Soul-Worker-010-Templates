@@ -1,0 +1,81 @@
+#include "_types.bt"
+
+
+typedef struct {
+    LPUTF8STRING name1;
+    char data_type;
+    LPUTF8STRING name2;
+    uint u0;
+    uint u1;
+    uint u2;
+    uint u3;
+    uint u4;
+    byte u5;
+} COLUMN <read=ReadCOLUMN>;
+
+string ReadCOLUMN(COLUMN& val) {
+    string s;
+    SPrintf(s, "%s, %s", ReadLPUTF8STRING(val.name1), ReadLPUTF8STRING(val.name2));
+
+    return s;
+}
+
+typedef struct {
+    LPUTF8STRING name;
+    uint row_count;
+    uint column_count;
+    struct {
+        COLUMN column[column_count] <optimize=false>;
+    } columns;
+
+    typedef struct {
+        LPUTF8STRING cell[column_count] <optimize=false>;
+    } ROW;
+
+    struct {
+        ROW row[row_count] <optimize=false>;
+    } rows;
+} TABLE;
+
+string ReadTABLE(TABLE& val) {
+    return ReadLPUTF8STRING(val.name);
+}
+
+typedef struct {
+    LPUTF8STRING name;
+    uint u0;
+    uint u1;
+} GROUP_TABLE;
+
+string ReadGROUP_TABLE(GROUP_TABLE& val) {
+    return ReadLPUTF8STRING(val.name);
+}
+
+typedef struct {
+    LPUTF8STRING name;
+    uint u0;
+    uint u1;
+    uint table_count;
+    GROUP_TABLE table[table_count] <read=ReadGROUP_TABLE, optimize=false>;
+} GROUP <read=ReadGROUP, optimize=false>;
+
+string ReadGROUP(GROUP& val) {
+    return ReadLPUTF8STRING(val.name);
+}
+
+
+Printf("WARNING: This template will take a long time to execute, so please be patient!");
+
+uint u0;
+uint u1;
+uint u2;
+
+struct {
+    uint table_count;
+    TABLE table[table_count] <read=ReadTABLE, optimize=false>;
+} tables;
+
+struct {
+    uint group_count;
+    GROUP group[group_count];
+} groups;

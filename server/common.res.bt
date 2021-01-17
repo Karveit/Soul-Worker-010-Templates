@@ -1,0 +1,23 @@
+#include "_types.bt"
+
+
+typedef struct {
+    uint id;
+    LPWSTRING text;
+    float u0;
+} ENTRY <read=ReadENTRY>;
+
+string ReadENTRY(ENTRY& val) {
+    string s;
+    SPrintf(s, "%i, %s, %.2f", val.id, ReadLPWSTRING(val.text), val.u0);
+
+    return s;
+}
+
+
+struct {
+    uint count;
+    ENTRY entry[count] <optimize=false>;
+} entries;
+
+LPSTRING checksum;

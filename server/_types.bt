@@ -1,0 +1,61 @@
+typedef struct {
+    ushort len;
+
+    if (len > 0)
+        char value[len];
+} LPSTRING <read=ReadLPSTRING>;
+
+string ReadLPSTRING(LPSTRING& val) {
+    if (val.len > 0)
+        return val.value;
+
+    return "";
+}
+
+typedef struct {
+    ushort len;
+
+    if (len > 0)
+        wchar_t value[len];
+} LPWSTRING <read=ReadLPWSTRING>;
+
+string ReadLPWSTRING(LPWSTRING& val) {
+    if (val.len > 0)
+        return val.value;
+
+    return "";
+}
+
+typedef struct {
+    local int value = 0;
+    local int i = 0;
+
+    while (true) {
+        ubyte data;
+        value += (int)(data & 0x7F) << (i++ * 7);
+
+        if ((data & 0x80) != 0x80)
+            break;
+    }
+} VLQ <read=ReadVLQ>;
+
+string ReadVLQ(VLQ& val) {
+    string s;
+    SPrintf(s, "%i", val.value);
+
+    return s;
+}
+
+typedef struct {
+    VLQ len;
+
+    if (len.value > 0)
+        char value[len.value];
+} LPUTF8STRING <read=ReadLPUTF8STRING>;
+
+string ReadLPUTF8STRING(LPUTF8STRING& val) {
+    if (val.len.value > 0)
+        return val.value;
+    
+    return "";
+}
