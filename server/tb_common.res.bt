@@ -3,13 +3,13 @@
 
 typedef struct {
     uint id;
-    LPWSTRING text;
-    float u0;
+    LPWSTRING key;
+    float value;
 } ENTRY <read=ReadENTRY>;
 
 string ReadENTRY(ENTRY& val) {
     string s;
-    SPrintf(s, "%i, %s, %.2f", val.id, ReadLPWSTRING(val.text), val.u0);
+    SPrintf(s, "%i, %s, %.2f", val.id, ReadLPWSTRING(val.key), val.value);
 
     return s;
 }

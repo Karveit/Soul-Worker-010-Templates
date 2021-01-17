@@ -2,18 +2,18 @@
 
 
 typedef struct {
-    uint id;
-    BOOL gm_only;
+    uint index;
+    ubyte permission_level;
     LPWSTRING commands[5] <optimize=false>;
-    uint id_again;
+    uint act_type;
 } ENTRY <read=ReadENTRY>;
 
 string ReadENTRY(ENTRY& val) {
     string s;
-    SPrintf(s, "%i, %s, %s, %s, %s, %s, %s, %i",
-        val.id, ReadBOOL(val.gm_only), ReadLPWSTRING(val.commands[0]),
+    SPrintf(s, "%i, %i, %s, %s, %s, %s, %s, %i",
+        val.index, val.permission_level, ReadLPWSTRING(val.commands[0]),
         ReadLPWSTRING(val.commands[1]), ReadLPWSTRING(val.commands[2]),
-        ReadLPWSTRING(val.commands[3]), ReadLPWSTRING(val.commands[4]), val.id_again
+        ReadLPWSTRING(val.commands[3]), ReadLPWSTRING(val.commands[4]), val.act_type
     );
 
     return s;

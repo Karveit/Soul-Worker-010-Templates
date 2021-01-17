@@ -2,7 +2,7 @@
 
 
 typedef struct {
-    uint u0;    // What is this value? It doesn't look like RGBA...
+    uint index;
 } ENTRY;
 
 
