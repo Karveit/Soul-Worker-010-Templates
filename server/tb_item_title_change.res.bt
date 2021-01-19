@@ -1,0 +1,28 @@
+#include "_types.bt"
+
+
+typedef struct {
+    ushort id;
+    ushort basic_success_rate;
+    ushort need_point;
+    uint need_zeny;
+    uint need_ether;
+} ENTRY <read=ReadENTRY>;
+
+string ReadENTRY(ENTRY& val) {
+    string s;
+    SPrintf(s, "%i, %i, %i, %i, %i",
+        val.id, val.basic_success_rate, val.need_point, val.need_zeny,
+        val.need_ether
+    );
+
+    return s;
+}
+
+
+struct {
+    uint count;
+    ENTRY entry[count] <optimize=false>;
+} entries;
+
+LPSTRING checksum;

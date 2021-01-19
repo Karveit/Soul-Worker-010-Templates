@@ -1,0 +1,23 @@
+#include "_types.bt"
+
+
+typedef struct {
+    ushort id;
+    ushort main_category;
+    uint item_id;
+} ENTRY <read=ReadENTRY>;
+
+string ReadENTRY(ENTRY& val) {
+    string s;
+    SPrintf(s, "%i, %i, %i", val.id, val.main_category, val.item_id);
+
+    return s;
+}
+
+
+struct {
+    uint count;
+    ENTRY entry[count] <optimize=false>;
+} entries;
+
+LPSTRING checksum;

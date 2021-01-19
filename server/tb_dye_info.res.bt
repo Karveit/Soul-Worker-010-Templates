@@ -1,0 +1,38 @@
+#include "_types.bt"
+
+
+typedef struct {
+    ushort id;
+    uint s_need_item_id;
+    uint s_need_item_count;
+    ushort dyes[10];
+    uint r_need_item_id;
+    ubyte r_need_item_count;
+    ushort rate_ids[10];
+    ushort rates[10];
+} ENTRY <read=ReadENTRY>;
+
+string ReadENTRY(ENTRY& val) {
+    string s;
+    SPrintf(s, "%i, %i:%i, { %i, %i, %i, %i, %i, %i, %i, %i, %i, %i }, %i:%i, { %i, %i, %i, %i, %i, %i, %i, %i, %i, %i }, { %i, %i, %i, %i, %i, %i, %i, %i, %i, %i }",
+        val.id, val.s_need_item_id, val.s_need_item_count, val.dyes[0],
+        val.dyes[1], val.dyes[2], val.dyes[3], val.dyes[4], val.dyes[5],
+        val.dyes[6], val.dyes[7], val.dyes[8], val.dyes[9],
+        val.r_need_item_id, val.r_need_item_count, val.rate_ids[0],
+        val.rate_ids[1], val.rate_ids[2], val.rate_ids[3], val.rate_ids[4],
+        val.rate_ids[5], val.rate_ids[6], val.rate_ids[7], val.rate_ids[8],
+        val.rate_ids[9], val.rates[0], val.rates[1], val.rates[2],
+        val.rates[3], val.rates[4], val.rates[5], val.rates[6], val.rates[7],
+        val.rates[8], val.rates[9]
+    );
+
+    return s;
+}
+
+
+struct {
+    uint count;
+    ENTRY entry[count] <optimize=false>;
+} entries;
+
+LPSTRING checksum;

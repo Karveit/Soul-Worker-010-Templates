@@ -1,0 +1,33 @@
+#include "_types.bt"
+
+
+typedef struct {
+    uint id;
+    BOOL is_apply;
+    uint check_type_value;
+    ubyte apply_level;
+    ushort achieve_points[5];
+    uint achieve_rewards[5];
+    ubyte sysmail_id;
+} ENTRY <read=ReadENTRY>;
+
+string ReadENTRY(ENTRY& val) {
+    string s;
+    SPrintf(s, "%i, %s, %i, %i, { %i, %i, %i, %i, %i }, { %i, %i, %i, %i, %i }, %i",
+        val.id, ReadBOOL(val.is_apply), val.check_type_value, val.apply_level,
+        val.achieve_points[0], val.achieve_points[1], val.achieve_points[2],
+        val.achieve_points[3], val.achieve_points[4], val.achieve_rewards[0],
+        val.achieve_rewards[1], val.achieve_rewards[2], val.achieve_rewards[3],
+        val.achieve_rewards[4], val.sysmail_id
+    );
+
+    return s;
+}
+
+
+struct {
+    uint count;
+    ENTRY entry[count] <optimize=false>;
+} entries;
+
+LPSTRING checksum;

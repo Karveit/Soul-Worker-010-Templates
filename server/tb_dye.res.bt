@@ -1,0 +1,29 @@
+#include "_types.bt"
+
+
+typedef struct {
+    ushort id;
+    ubyte icon_color_red;
+    ubyte icon_color_green;
+    ubyte icon_color_blue;
+    ubyte hidden_info;
+    LPWSTRING color_hex;
+} ENTRY <read=ReadENTRY>;
+
+string ReadENTRY(ENTRY& val) {
+    string s;
+    SPrintf(s, "%i, [%i, %i, %i], %i, %s", 
+        val.id, val.icon_color_red, val.icon_color_green,
+        val.icon_color_blue, val.hidden_info, ReadLPWSTRING(val.color_hex)
+    );
+
+    return s;
+}
+
+
+struct {
+    uint count;
+    ENTRY entry[count] <optimize=false>;
+} entries;
+
+LPSTRING checksum;
